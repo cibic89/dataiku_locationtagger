@@ -8,9 +8,10 @@ import nltk
 import spacy
 from newspaper import Article
 nlp = spacy.load('en_core_web_trf')
-# cur_dir = os.path.dirname(os.path.realpath(__file__))  # write permission in Dataiku DSS v11+
+data_dir = os.path.dirname(os.path.realpath(__file__))
+# write permission in Dataiku DSS v11+
 cur_dir = os.getcwd()
-with open(cur_dir + "/data/words_to_ignore.csv") as file:
+with open(data_dir+"/data/words_to_ignore.csv") as file:
     words_to_ignore = file.read().splitlines()
 words_to_ignore = [a.lower() for a in words_to_ignore]
 
@@ -68,7 +69,7 @@ class LocationExtractor(object):
     """
     
     def __init__(self, named_entity_words, db_file=None):
-        db_file = db_file or os.getcwd() + "/locationdata.db"  # write permission in DataIKU v11+
+        db_file = db_file or cur_dir + "/locationdata.db"  # write permission in DataIKU v11+
         self.conn = sqlite3.connect(db_file)
         self.named_entities = named_entity_words
 
@@ -78,7 +79,7 @@ class LocationExtractor(object):
 
         cur.execute("CREATE TABLE locations(geoname_id INTEGER, continent_code TEXT, continent_name TEXT, country_iso_code TEXT, country_name TEXT, subdivision_iso_code TEXT, subdivision_name TEXT, city_name TEXT, metro_code TEXT, time_zone TEXT)")
 
-        with open(cur_dir+"/data/City-Region-Locations.csv",encoding = 'UTF') as info:
+        with open(data_dir+"/data/City-Region-Locations.csv",encoding = 'UTF') as info:
             reader = csv.reader(info)
             for row in reader:
                 cur.execute("INSERT INTO locations VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", row)
