@@ -8,7 +8,7 @@ import nltk
 import spacy
 from newspaper import Article
 nlp = spacy.load('en_core_web_sm')
-# cur_dir = os.path.dirname(os.path.realpath(__file__))  # write permission in dataiku DSS
+# cur_dir = os.path.dirname(os.path.realpath(__file__))  # write permission in Dataiku DSS v11+
 cur_dir = os.getcwd()
 with open(cur_dir + "/data/words_to_ignore.csv") as file:
     words_to_ignore = file.read().splitlines()
@@ -68,7 +68,7 @@ class LocationExtractor(object):
     """
     
     def __init__(self, named_entity_words, db_file=None):
-        db_file = db_file or os.getcwd() + "/locationdata.db"
+        db_file = db_file or os.getcwd() + "/locationdata.db"  # write permission in DataIKU v11+
         self.conn = sqlite3.connect(db_file)
         self.named_entities = named_entity_words
 
