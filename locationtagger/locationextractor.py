@@ -9,12 +9,12 @@ import spacy
 from newspaper import Article
 
 # Adaptations to folder locations for DataIKU v11+
-os.environ['TRANSFORMERS_CACHE'] = str(os.getcwd()) + '/transformers'
-os.environ['HUGGINGFACE_HUB_CACHE'] = str(os.getcwd()) + '/transformers'
-os.environ['HF_HOME'] = str(os.getcwd()) + '/transformers'
-os.environ['XDG_CACHE_HOME'] = str(os.getcwd()) + '/huggingface'
-data_dir = os.path.dirname(os.path.realpath(__file__))
 cur_dir = os.getcwd()
+os.environ['TRANSFORMERS_CACHE'] = cur_dir + '/transformers'
+os.environ['HUGGINGFACE_HUB_CACHE'] = cur_dir + '/transformers'
+os.environ['HF_HOME'] = cur_dir + '/transformers'
+os.environ['XDG_CACHE_HOME'] = cur_dir + '/huggingface'
+data_dir = os.path.dirname(os.path.realpath(__file__))
 
 with open(data_dir+"/data/words_to_ignore.csv") as file:
     words_to_ignore = file.read().splitlines()
