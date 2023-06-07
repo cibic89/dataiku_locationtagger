@@ -7,13 +7,21 @@ from collections import Counter
 import nltk
 import spacy
 from newspaper import Article
-nlp = spacy.load('en_core_web_trf')
+
+# Adaptations to folder locations for DataIKU v11+
+os.environ['TRANSFORMERS_CACHE'] = str(os.getcwd()) + '/transformers'
+os.environ['HUGGINGFACE_HUB_CACHE'] = str(os.getcwd()) + '/transformers'
+os.environ['HF_HOME'] = str(os.getcwd()) + '/transformers'
+os.environ['XDG_CACHE_HOME'] = str(os.getcwd()) + '/huggingface'
 data_dir = os.path.dirname(os.path.realpath(__file__))
-# write permission in Dataiku DSS v11+
 cur_dir = os.getcwd()
+
 with open(data_dir+"/data/words_to_ignore.csv") as file:
     words_to_ignore = file.read().splitlines()
 words_to_ignore = [a.lower() for a in words_to_ignore]
+
+nlp = spacy.load('en_core_web_trf')
+
 
 class NamedEntityExtractor(object):
     """
